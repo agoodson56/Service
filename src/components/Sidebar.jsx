@@ -48,12 +48,8 @@ export default function Sidebar({ isOpen, onClose }) {
             {isOpen && <div className="modal-overlay" style={{ zIndex: 150 }} onClick={onClose} />}
             <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
                 <div className="sidebar-header">
-                    <div className="sidebar-logo">
-                        <Icon name="shield" size={22} fill={true} />
-                    </div>
-                    <div className="sidebar-brand">
-                        <h1>SecureServ Pro</h1>
-                        <span>Service Management</span>
+                    <div className="sidebar-logo-img-wrap">
+                        <img src="/logo.jpg" alt="3D Service" className="sidebar-logo-img" />
                     </div>
                 </div>
 
