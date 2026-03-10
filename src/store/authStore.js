@@ -26,7 +26,7 @@ const DEFAULT_USERS = [
     {
         id: 'admin-001',
         email: 'agoodson@3dtsi.com',
-        name: 'Anthony Goodson',
+        name: 'Allan Goodson',
         role: 'Admin',
         createdAt: new Date().toISOString(),
     },
