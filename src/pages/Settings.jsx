@@ -4,8 +4,9 @@ import store from '../store/dataStore';
 import PageHeader from '../components/PageHeader';
 import Icon from '../components/Icon';
 import { getApiKey, setApiKey, AI_BRAINS } from '../services/aiService';
+import UserManagement from '../components/UserManagement';
 
-export default function Settings({ onMenuClick, toast }) {
+export default function Settings({ onMenuClick, toast, user }) {
     const { settings, updateSettings } = useSettings();
     const [form, setForm] = useState({ ...settings });
     const [tab, setTab] = useState('company');
@@ -37,8 +38,17 @@ export default function Settings({ onMenuClick, toast }) {
                     <button className={`tab ${tab === 'rates' ? 'active' : ''}`} onClick={() => setTab('rates')}>💰 Rates</button>
                     <button className={`tab ${tab === 'sla' ? 'active' : ''}`} onClick={() => setTab('sla')}>⏱️ SLA</button>
                     <button className={`tab ${tab === 'ai' ? 'active' : ''}`} onClick={() => setTab('ai')}>🤖 AI Brains</button>
+                    {user?.role === 'Admin' && (
+                        <button className={`tab ${tab === 'users' ? 'active' : ''}`} onClick={() => setTab('users')}><Icon name="group" size={16} /> Users</button>
+                    )}
                     <button className={`tab ${tab === 'system' ? 'active' : ''}`} onClick={() => setTab('system')}>⚙️ System</button>
                 </div>
+
+                {tab === 'users' && user?.role === 'Admin' && (
+                    <div className="card" style={{ maxWidth: 900 }}>
+                        <UserManagement currentUser={user} toast={toast} />
+                    </div>
+                )}
 
                 {tab === 'company' && (
                     <div className="card" style={{ maxWidth: 600 }}>

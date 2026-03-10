@@ -2,7 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import Icon from './Icon';
 
-export default function Sidebar({ isOpen, onClose }) {
+export default function Sidebar({ isOpen, onClose, user, onLogout }) {
     const location = useLocation();
     const { data } = useStore();
 
@@ -76,17 +76,29 @@ export default function Sidebar({ isOpen, onClose }) {
                 </nav>
 
                 <div className="sidebar-footer">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flex: 1 }}>
                         <div style={{
                             width: 32, height: 32, borderRadius: '50%',
-                            background: 'var(--accent-primary)',
+                            background: user?.role === 'Admin' ? 'var(--accent-gold)' : 'var(--accent-primary)',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: 14, fontWeight: 700, color: 'white'
-                        }}>A</div>
-                        <div>
-                            <div style={{ fontSize: 13, fontWeight: 600 }}>Admin User</div>
-                            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Dispatcher</div>
+                            fontSize: 12, fontWeight: 700, color: 'white'
+                        }}>{user?.name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}</div>
+                        <div style={{ flex: 1 }}>
+                            <div style={{ fontSize: 13, fontWeight: 600 }}>{user?.name || 'User'}</div>
+                            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{user?.role || 'Unknown'}</div>
                         </div>
+                        {onLogout && (
+                            <button
+                                onClick={onLogout}
+                                title="Logout"
+                                style={{
+                                    background: 'none', border: 'none', cursor: 'pointer',
+                                    color: 'var(--text-muted)', padding: 4, display: 'flex',
+                                }}
+                            >
+                                <Icon name="logout" size={18} />
+                            </button>
+                        )}
                     </div>
                 </div>
             </aside>
